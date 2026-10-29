@@ -1,5 +1,12 @@
-const DEFAULT_API_BASE = import.meta.env.PROD ? '/api' : 'http://localhost:4000/api';
-const API_BASE = (import.meta.env.VITE_API_URL || DEFAULT_API_BASE).replace(/\/$/, '');
+
+const DEFAULT_API_BASE = import.meta.env.PROD
+  ? '/api'
+  : 'http://localhost:4000/api';
+
+const API_BASE = import.meta.env.PROD
+  ? '/api'
+  : (import.meta.env.VITE_API_URL || DEFAULT_API_BASE).replace(/\/$/, '');
+
 
 export async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_BASE}${path.startsWith('/') ? path : `/${path}`}`, {
