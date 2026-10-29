@@ -1,11 +1,13 @@
+const DEFAULT_LOCAL_API = 'http://localhost:4000/api';
 
-const DEFAULT_API_BASE = import.meta.env.PROD
-  ? '/api'
-  : 'http://localhost:4000/api';
+const IS_LOCAL_BROWSER =
+  typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1');
 
-const API_BASE = import.meta.env.PROD
-  ? '/api'
-  : (import.meta.env.VITE_API_URL || DEFAULT_API_BASE).replace(/\/$/, '');
+const API_BASE = IS_LOCAL_BROWSER
+  ? (import.meta.env.VITE_API_URL || DEFAULT_LOCAL_API).replace(/\/$/, '')
+  : '/api';
 
 
 export async function apiRequest(path, options = {}) {
